@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import AddEntry from './components/AddEntry'
 
 // Our Reducers
-import reducer from './reducer' 
+import reducer from './reducers' 
 
 export default () => (
   <Provider store={createStore(reducer)}>

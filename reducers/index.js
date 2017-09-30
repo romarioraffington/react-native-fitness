@@ -1,7 +1,7 @@
 import { RECEIVE_ENTRIES, ADD_ENTRIES } from '../actions/constants';
 
 
-export const entries = (state = {}, action) => {
+export default entries = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_ENTRIES :
       return {
