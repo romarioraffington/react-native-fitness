@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 
 // Our Components
 import DateHeader from '../DateHeader'
-import Slider from '../Slider'
+import FitnessSlider from '../FitnessSlider'
 import Stepper from '../Stepper'
 
 // Our Helpers
@@ -90,7 +90,7 @@ export default class AddEntry extends Component {
             <View key={key}>
               {getIcon()}
               { type === 'slider' 
-                  ? <Slider
+                  ? <FitnessSlider
                       value={value}
                       onChange={value => this.slide(key, value)}
                       { ...rest }
