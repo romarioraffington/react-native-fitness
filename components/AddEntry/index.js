@@ -11,6 +11,7 @@ import FitnessStepper from '../FitnessStepper'
 
 // Our Helpers
 import { getMetricMetaInfo, timeToString } from '../../utils/helpers'
+import { submitEntry, removeEntry } from '../../utils/api'
 
 
 const SubmitButton = ({ onPress }) => (
@@ -72,7 +73,7 @@ export default class AddEntry extends Component {
 
     // Update Redux store (Dispatch action)
 
-    // Save to DB
+    submitEntry({ key, entry })
 
     // Clear local notification
   }
@@ -86,7 +87,7 @@ export default class AddEntry extends Component {
 
     // Route to Home
 
-    // Update DB
+    removeEntry(key)
   }
 
   render () {
