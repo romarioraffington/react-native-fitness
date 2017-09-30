@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Slider } from 'react-native'
 
-export default FitnessSlider = ({ max, unit, step, value, onChange}) =>  (
+export default ({ max, unit, step, value, onChange}) =>  (
   <View>
     <Slider 
       step={step}
