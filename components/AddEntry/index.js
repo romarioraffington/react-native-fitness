@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 
 // Our Components
 import DateHeader from '../DateHeader'
@@ -10,8 +11,11 @@ import FitnessSlider from '../FitnessSlider'
 import FitnessStepper from '../FitnessStepper'
 
 // Our Helpers
-import { getMetricMetaInfo, timeToString } from '../../utils/helpers'
+import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../../utils/helpers'
 import { submitEntry, removeEntry } from '../../utils/api'
+
+// Our Actions
+import { addEntry } from '../../actions'
 
 
 const SubmitButton = ({ onPress }) => (
@@ -20,7 +24,7 @@ const SubmitButton = ({ onPress }) => (
   </TouchableOpacity>
 )
 
-export default class AddEntry extends Component {
+class AddEntry extends Component {
   state = {
     run: 0,
     bike: 0,
@@ -61,6 +65,10 @@ export default class AddEntry extends Component {
     const key = timeToString()
     const entry = this.state
 
+    this.props.dispatch(addEntry({
+      [key]: entry,
+    }))
+
     this.setState({
       run: 0,
       bike: 0,
@@ -71,7 +79,7 @@ export default class AddEntry extends Component {
 
     // We want to:
 
-    // Update Redux store (Dispatch action)
+    // Navigate Home
 
     submitEntry({ key, entry })
 
@@ -83,7 +91,9 @@ export default class AddEntry extends Component {
    
     // We want to:
     
-    // Update Redux store (Dispatch action)
+    this.props.dispatch(addEntry({
+      [key]: getDailyReminderValue(),
+    }))
 
     // Route to Home
 
@@ -137,3 +147,16 @@ export default class AddEntry extends Component {
     )
   }
 }
+
+// Redux
+export const mapStateToProps = (state = {}) => {
+  const key = timeToString();
+  
+  return {
+    isLogged: state[key] && typeof state[key].today === 'undefined',
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(AddEntry)
