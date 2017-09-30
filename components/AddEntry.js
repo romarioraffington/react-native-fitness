@@ -1,6 +1,13 @@
+// External Components
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { getMetricMetaInfo } from '../utils/helpers'  
+
+// Our Components
+import Slider from './Slider'
+import Stepper from './Stepper'
+
+// Our Helpers
+import { getMetricMetaInfo } from '../utils/helpers'
 
 export default class AddEntry extends Component {
   state = {
@@ -40,9 +47,33 @@ export default class AddEntry extends Component {
   }
 
   render () {
+    const metaInfo = getMetricMetaInfo();
+
     return (
       <View>
-        { getMetricMetaInfo('sleep').getIcon()}
+        { Object.keys(metaInfo).map(key => {
+          const { getIcon, type, ...rest } = metaInfo[key];
+          const value = this.state[key]
+
+          return (
+            <View key={key}>
+              {getIcon()}
+              { type === 'slider' 
+                  ? <Slider
+                      value={value}
+                      onChange={value => this.slide(key, value)}
+                      { ...rest }
+                    />
+                  : <Stepper
+                      value={value}
+                      onIncrement={() => this.increment(key)}
+                      onDecrement={() => this.decrement(key)}
+                      { ...rest }
+                    />
+              }
+            </View>
+          )
+        })}
       </View>
     )
   }
