@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 
 // Our Components
-import Slider from './Slider'
-import Stepper from './Stepper'
+import Slider from '../Slider'
+import Stepper from '../Stepper'
 
 // Our Helpers
-import { getMetricMetaInfo } from '../utils/helpers'
+import { getMetricMetaInfo } from '../../utils/helpers'
 
 export default class AddEntry extends Component {
   state = {
