@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { FontAwesome, MaterailIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { white } from './colors';
 
 export function isBetween (num, x, y) {
@@ -54,13 +54,15 @@ export function getMetricMetaInfo (metric) {
       step: 1,
       type: 'steppers',
       getIcon() {
-        <View>
-          <MaterialIcons 
-            name='directions-run'
-            color={'black'}
-            size={35}
-          />
-        </View>
+        return (
+          <View>
+            <MaterialIcons 
+              name='directions-run'
+              color={'black'}
+              size={35}
+            />
+          </View>
+        )
       }
     },
     bike: {
@@ -70,13 +72,15 @@ export function getMetricMetaInfo (metric) {
       step: 1,
       type: 'steppers',
       getIcon() {
-        <View>
-          <MaterialCommunityIcons 
-            name='bike'
-            color={'black'}
-            size={35}
-          />
-        </View>
+        return (
+          <View>
+            <MaterialCommunityIcons 
+              name='bike'
+              color={'black'}
+              size={35}
+            />
+          </View>
+        )
       }
     },
     swim: {
@@ -86,13 +90,15 @@ export function getMetricMetaInfo (metric) {
       step: 100,
       type: 'steppers',
       getIcon() {
-        <View>
-          <MaterialCommunityIcons 
-            name='swim'
-            color={'black'}
-            size={35}
-          />
-        </View>
+        return (
+          <View>
+            <MaterialCommunityIcons 
+              name='swim'
+              color={'black'}
+              size={35}
+            />
+          </View>
+        )
       }
     },
     sleep: {
@@ -102,13 +108,15 @@ export function getMetricMetaInfo (metric) {
       step: 1,
       type: 'slider',
       getIcon() {
-        <View>
-          <FontAwesome 
-            name='bed'
-            color={'black'}
-            size={35}
-          />
-        </View>
+        return (
+          <View>
+            <FontAwesome 
+              name='bed'
+              color={'black'}
+              size={35}
+            />
+          </View>
+        )
       }
     },
     eat: {
@@ -118,13 +126,15 @@ export function getMetricMetaInfo (metric) {
       step: 1,
       type: 'slider',
       getIcon() {
-        <View>
-          <MaterialCommunityIcons 
-            name='food'
-            color={'black'}
-            size={35}
-          />
-        </View>
+        return (
+          <View>
+            <MaterialCommunityIcons 
+              name='food'
+              color={'black'}
+              size={35}
+            />
+          </View>
+        )
       }
     }
   }
