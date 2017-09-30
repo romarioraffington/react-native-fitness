@@ -16,9 +16,11 @@ export default class AddEntry extends Component {
     bike: 0,
     swim: 0,
     sleep: 0,
-    eat: 0
+    eat: 0,
   }
 
+  // Methods
+  
   increment = (metric) => {
     const { max, step }= getMetricMetaInfo(metric);
 
@@ -43,9 +45,7 @@ export default class AddEntry extends Component {
     })
   }
 
-  slide = (metric, value) => {
-    this.setState({ [metric]: value });
-  }
+  slide = (metric, value) => this.setState({ [ metric ]: value });
 
   render () {
     const metaInfo = getMetricMetaInfo();
