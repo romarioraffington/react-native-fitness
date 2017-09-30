@@ -1,9 +1,11 @@
 // External Components
 import React, { Component } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import { View, Text, TouchableOpacity } from 'react-native'
 
 // Our Components
 import DateHeader from '../DateHeader'
+import TextButton from '../TextButton'
 import FitnessSlider from '../FitnessSlider'
 import FitnessStepper from '../FitnessStepper'
 
@@ -40,7 +42,7 @@ export default class AddEntry extends Component {
       }
     })
   }
-
+ 
   decrement = (metric) => {
     this.setState((state) => {
       const count = state[metric] +  getMetricMetaInfo(metric).step
@@ -68,7 +70,6 @@ export default class AddEntry extends Component {
 
     // We want to:
 
-
     // Update Redux store (Dispatch action)
 
     // Save to DB
@@ -76,12 +77,37 @@ export default class AddEntry extends Component {
     // Clear local notification
   }
 
+  reset = () => {
+    const key = timeToString();
+   
+    // We want to:
+    
+    // Update Redux store (Dispatch action)
+
+    // Route to Home
+
+    // Update DB
+  }
+
   render () {
     const metaInfo = getMetricMetaInfo();
 
+    if (this.props.isLogged) {
+      return (
+        <View>
+          <Ionicons 
+            name='ios-happy-outline' 
+            size={100} 
+          />
+          <Text> You alread logged your information for today</Text>
+          <TextButton onPress={this.reset}> Reset </TextButton>
+        </View>
+      )
+    }
+
     return (
       <View>
-        < DateHeader date={new Date().toLocaleDateString()} />
+        <DateHeader date={new Date().toLocaleDateString()} />
         { Object.keys(metaInfo).map(key => {
           const { getIcon, type, ...rest } = metaInfo[key];
           const value = this.state[key]
