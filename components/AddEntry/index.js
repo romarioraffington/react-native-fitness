@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 
 // Our Components
+import DateHeader from '../DateHeader'
 import Slider from '../Slider'
 import Stepper from '../Stepper'
 
@@ -51,6 +52,7 @@ export default class AddEntry extends Component {
 
     return (
       <View>
+        < DateHeader date={new Date().toLocaleDateString()} />
         { Object.keys(metaInfo).map(key => {
           const { getIcon, type, ...rest } = metaInfo[key];
           const value = this.state[key]
