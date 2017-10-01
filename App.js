@@ -12,7 +12,7 @@ import reducer from './reducers'
 
 export default () => (
   <Provider store={createStore(reducer)}>
-    <View>
+    <View style={{flex: 1}}>
       <AddEntry />
     </View>
   </Provider>
