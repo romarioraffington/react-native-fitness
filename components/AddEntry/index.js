@@ -1,7 +1,7 @@
 // External Components
 import React, { Component } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 
 // Our Components
@@ -9,20 +9,15 @@ import DateHeader from '../DateHeader'
 import TextButton from '../TextButton'
 import FitnessSlider from '../FitnessSlider'
 import FitnessStepper from '../FitnessStepper'
+import SubmitButton from './components/SubmitButton'
 
 // Our Helpers
-import { getMetricMetaInfo, timeToString, getDailyReminderValue, white, purple } from '../../utils/helpers'
+import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../../utils/helpers'
+import { white } from '../../utils/colors'
 import { submitEntry, removeEntry } from '../../utils/api'
 
 // Our Actions
 import { addEntry } from '../../actions'
-
-
-const SubmitButton = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress}>
-    <Text>Submit</Text>
-  </TouchableOpacity>
-)
 
 class AddEntry extends Component {
   state = {
@@ -105,9 +100,9 @@ class AddEntry extends Component {
 
     if (this.props.isLogged) {
       return (
-        <View>
+        <View style={styles.center}>
           <Ionicons 
-            name='ios-happy-outline' 
+            name= {Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'}
             size={100} 
           />
           <Text> You alread logged your information for today</Text>
@@ -117,14 +112,14 @@ class AddEntry extends Component {
     }
 
     return (
-      <View>
+      <View style={styles.container}>
         <DateHeader date={new Date().toLocaleDateString()} />
         { Object.keys(metaInfo).map(key => {
           const { getIcon, type, ...rest } = metaInfo[key];
           const value = this.state[key]
 
           return (
-            <View key={key}>
+            <View key={key} style={styles.row}>
               {getIcon()}
               { type === 'slider' 
                   ? <FitnessSlider
@@ -150,26 +145,22 @@ class AddEntry extends Component {
 
 // Styles
 const styles = StyleSheet.create({
-  iosSubmitButton: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: white,
   },
-  androidSubmitButton: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  submitButtonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30,
   }
 })
 
