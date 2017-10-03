@@ -1,7 +1,7 @@
 // External Components
 import React, { Component } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 // Our Components
@@ -11,7 +11,7 @@ import FitnessSlider from '../FitnessSlider'
 import FitnessStepper from '../FitnessStepper'
 
 // Our Helpers
-import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../../utils/helpers'
+import { getMetricMetaInfo, timeToString, getDailyReminderValue, white, purple } from '../../utils/helpers'
 import { submitEntry, removeEntry } from '../../utils/api'
 
 // Our Actions
@@ -147,6 +147,31 @@ class AddEntry extends Component {
     )
   }
 }
+
+// Styles
+const styles = StyleSheet.create({
+  iosSubmitButton: {
+    backgroundColor: purple,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  androidSubmitButton: {
+    backgroundColor: purple,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+  },
+  submitButtonText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
+  }
+})
 
 // Redux
 export const mapStateToProps = (state = {}) => {
