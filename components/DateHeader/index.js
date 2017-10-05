@@ -7,7 +7,7 @@ import { purple } from '../../utils/colors'
 
 export default ({ date }) => {
   return (
-    <Text style={[{ color: purple, fontSize: 25 }]}>
+    <Text style={[{ color: purple, fontSize: 12 }]}>
       { date }
     </Text>
   )

@@ -1,14 +1,16 @@
 // External Dependencies
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 // Our Components
+import DateHeader from '../DateHeader'
 import UdacityFitnessCalendar from 'udacifitness-calendar'
 
 // Our Dependencies
 import { receiveEntries, addEntry } from '../../actions'
 import { timeToString, getDailyReminderValue } from '../../utils/helpers'
+import { white } from '../../utils/colors'
 import { fetchCalendarResults } from '../../utils/api'
 
 // Redux
@@ -30,17 +32,25 @@ export class History extends Component {
   }
 
   renderItem = ({ today, ...metrics }, formattedDate, key) => (
-    <View>
+    <View style={styles.item}> 
       { today 
-        ? <Text>{JSON.stringify(today)}</Text>
-        : <Text>{JSON.stringify(metrics)}</Text> 
+        ? <View>
+            <DateHeader date={formattedDate} />
+            <Text style={styles.noDataText}>
+              {today}
+            </Text>
+         </View>
+        : <TouchableOpacity onPress={() => console.log('Pressed')}>
+            <Text>{JSON.stringify(metrics)}</Text>
+          </TouchableOpacity>
       }
     </View>
   )
 
   renderEmptyDate = (formattedDate) => (
-    <View>
-      <Text>No data for this day</Text>
+    <View style={styles.item}>
+      <DateHeader date={formattedDate} />
+      <Text style={styles.noDataText}>No data logged for this day 😪</Text>
     </View>
   )
 
@@ -58,6 +68,20 @@ export class History extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  item: {
+    backgroundColor: white,
+    marginTop: 20,
+    padding: 20,
+    justifyContent: 'center'
+  },
+  noDataText: {
+    fontSize: 16,
+    paddingTop: 20,
+    paddingBottom: 20,
+  }
+})
 
 export default connect(
   mapStateToProps,
