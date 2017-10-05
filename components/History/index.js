@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import { AppLoading } from 'expo'
 
 // Our Components
 import DateHeader from '../DateHeader'
@@ -14,10 +15,11 @@ import { timeToString, getDailyReminderValue } from '../../utils/helpers'
 import { white } from '../../utils/colors'
 import { fetchCalendarResults } from '../../utils/api'
 
-// Redux
-const mapStateToProps = (entries) => ({ entries })
+class History extends Component {
+  state = {
+    isLoading: true
+  }
 
-export class History extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
 
@@ -30,6 +32,7 @@ export class History extends Component {
           }))
         }
       })
+      .then(() => this.setState({ isLoading: false }))
   }
 
   renderItem = ({ today, ...metrics }, formattedDate, key) => (
@@ -56,20 +59,25 @@ export class History extends Component {
   )
 
   render() {
-    const { entries, isReady } = this.props
+    const { entries } = this.props
     
+    if (this.state.isLoading) {
+      return (
+        <AppLoading />
+      )
+    }
+
     return (
-      entries ? (
-        <UdacityFitnessCalendar
-          items={entries}
-          renderItem={this.renderItem}
-          renderEmptyDate={this.renderEmptyDate}
-        />
-      ): <View><Text>Loading...</Text></View>
+      <UdacityFitnessCalendar
+        items={entries}
+        renderItem={this.renderItem}
+        renderEmptyDate={this.renderEmptyDate}
+      />
     )
   }
 }
 
+// Styles
 const styles = StyleSheet.create({
   item: {
     backgroundColor: white,
@@ -81,8 +89,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 20,
     paddingBottom: 20,
-  }
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 })
+
+// Redux
+const mapStateToProps = (entries) => ({ entries })
 
 export default connect(
   mapStateToProps,
