@@ -18,6 +18,7 @@ const store = createStore(reducer, devToolsEnhancer());
 export default () => (
   <Provider store={store}>
     <View style={{flex: 1}}>
+      <View style={{height: 20}}/>
       <History />
     </View>
   </Provider>
