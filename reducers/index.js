@@ -1,6 +1,5 @@
 import { RECEIVE_ENTRIES, ADD_ENTRIES } from '../actions/constants';
 
-
 export default entries = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_ENTRIES :
@@ -13,7 +12,6 @@ export default entries = (state = {}, action) => {
         ...state,
         ...action.entry
       }
-
-      return state
+    return state
   }
 }

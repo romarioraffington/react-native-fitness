@@ -1,12 +1,11 @@
 import { RECEIVE_ENTRIES, ADD_ENTRIES } from './constants';
 
-export const receiveEntry  = (entries) => {
+export const receiveEntries = (entries) => {
   return {
     type: RECEIVE_ENTRIES,
     entries,
   }
 }
-
 
 export const addEntry = (entry) => {
   return {
