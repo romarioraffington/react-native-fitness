@@ -49,7 +49,7 @@ export function timeToString (time = Date.now()) {
 const styles = StyleSheet.create({
   iconContainer: {
     padding: 5,
-    borderRadius: 8,
+    borderRadius: 5,
     width: 50,
     height: 50,
     justifyContent: 'center',
@@ -100,7 +100,6 @@ export function getMetricMetaInfo (metric) {
       displayName: 'Swim',
       max: 9900,
       unit: 'meters',
-      step: 100,
       type: 'steppers',
       getIcon() {
         return (
