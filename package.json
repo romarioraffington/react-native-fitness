@@ -5,7 +5,8 @@
   "devDependencies": {
     "jest-expo": "^21.0.2",
     "react-native-scripts": "1.5.0",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "react-test-renderer": "16.0.0-alpha.12",
+    "remote-redux-devtools": "^0.5.12"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -23,6 +24,7 @@
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "udacifitness-calendar": "^11.0.0"
   }
 }

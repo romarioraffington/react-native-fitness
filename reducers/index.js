@@ -5,12 +5,12 @@ export default entries = (state = {}, action) => {
     case RECEIVE_ENTRIES :
       return {
         ...state,
-        ...action.entries
+        ...action.payload
       }
     case ADD_ENTRIES :
       return {
         ...state,
-        ...action.entry
+        ...action.payload
       }
     return state
   }
