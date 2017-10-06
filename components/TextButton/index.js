@@ -6,7 +6,7 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { purple } from '../../utils/colors'
 
 export default({ children, onPress, style = {} }) => (
-  <TouchableOpacity style={styles.button} onPress={onPress}>
+  <TouchableOpacity onPress={onPress}>
     <Text style={[ styles.button, style ]}> {children} </Text>
   </TouchableOpacity>
 )
