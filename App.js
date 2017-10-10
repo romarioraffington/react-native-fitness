@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { Constants } from 'expo'
 import { View, Platform, StatusBar } from 'react-native'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import devToolsEnhancer from 'remote-redux-devtools';
 
@@ -13,6 +13,7 @@ import { purple, white } from './utils/colors'
 
 // Our Components
 import AddEntry from './components/AddEntry'
+import EntryDetail from './components/EntryDetail'
 import History from './components/History'
 
 // Our Reducers
@@ -54,6 +55,22 @@ const Tabs = TabNavigator({
   }
 })
 
+// MainNavigator Component
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+  },
+  EntryDetail: {
+    screen: EntryDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  }
+})
+
 // Status Bar
 const FitnessStatusBar = ({ backgroundColor, props }) => (
   <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -62,6 +79,7 @@ const FitnessStatusBar = ({ backgroundColor, props }) => (
     />
   </View>
 )
+
 // Boostrap store
 const store = createStore(reducer, devToolsEnhancer());
 
@@ -69,7 +87,7 @@ export default () => (
   <Provider store={store}>
     <View style={{flex: 1}}>
       <FitnessStatusBar backgroundColor={white} barStyle='light-content'/>
-      <Tabs />
+      <MainNavigator />
     </View>
   </Provider>
 )
