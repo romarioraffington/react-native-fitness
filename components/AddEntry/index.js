@@ -1,8 +1,9 @@
 // External Components
 import React, { Component } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationActions } from  'react-navigation'
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 
 // Our Components
 import DateHeader from '../DateHeader'
@@ -56,6 +57,12 @@ class AddEntry extends Component {
 
   slide = (metric, value) => this.setState({ [ metric ]: value })
 
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({
+      key: 'AddEntry'
+    }))
+  }
+
   submit = () => {
     const key = timeToString()
     const entry = this.state
@@ -72,10 +79,7 @@ class AddEntry extends Component {
       eat: 0,
     })
 
-    // We want to:
-
-    // Navigate Home
-
+    this.toHome()
     submitEntry({ key, entry })
 
     // Clear local notification
@@ -90,8 +94,7 @@ class AddEntry extends Component {
       [key]: getDailyReminderValue(),
     }))
 
-    // Route to Home
-
+    this.toHome()
     removeEntry(key)
   }
 
