@@ -4,7 +4,7 @@ import { View, Text, ActivityIndicator } from 'react-native'
 export default class Live extends Component {
   state = {
     cordinates: null,
-    status: 'null',
+    status: null,
     direction: ''
   }
   render () {
