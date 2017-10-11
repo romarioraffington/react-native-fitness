@@ -1,24 +1,56 @@
 // External Dependencies
 import React, { Component } from 'react'
+import { Location, Permissions } from 'expo'
 import { Foundation } from '@expo/vector-icons'
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native'
 
 // Our Dependencies
+import { calculateDirection } from '../../utils/helpers'
 import { purple, white } from '../../utils/colors'
 
 export default class Live extends Component {
   state = {
-    cordinates: null,
-    status: '',
+    coords: null,
+    status: 'granted',
     direction: ''
+  }
+
+  componentDidMount() {
+    Permissions.getAsync(Permissions.LOCATION)
+      .then(({ status }) => {
+        status === 'granted' 
+          ? this.setLocation()
+          : this.setState({ status })
+      })
+      .catch(error => {
+        console.warn('Error getting location permission: ', error)
+        this.setState({ status: 'undetermined' })
+      })
   }
 
   askPermission = () => {
 
   }
 
+  setLocation = () => {
+    Location.watchPositionAsync({
+      enableHighAccuracy: true,
+      timeInterval: 1,
+      distanceInterval: 1,
+    }, ({ coords}) => {
+      const newDirection = calculateDirection(coords.heading)
+      const { direction } = this.state
+
+      this.setState({
+        coords,
+        status: 'granted',
+        direction: newDirection
+      })
+    })
+  }
+
   render() {
-    const { status, cordinates, direction } = this.state
+    const { status, coords, direction } = this.state
 
     if (status === null) {
       return <ActivityIndicator style={{ margin: 30 }} />
