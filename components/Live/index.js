@@ -1,36 +1,133 @@
+// External Dependencies
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { Foundation } from '@expo/vector-icons'
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native'
+
+// Our Dependencies
+import { purple, white } from '../../utils/colors'
 
 export default class Live extends Component {
   state = {
     cordinates: null,
-    status: null,
+    status: '',
     direction: ''
   }
-  render () {
+
+  askPermission = () => {
+
+  }
+
+  render() {
     const { status, cordinates, direction } = this.state
 
     if (status === null) {
-      return <ActivityIndicator style={{margin:30}} />
+      return <ActivityIndicator style={{ margin: 30 }} />
     } else if (status === 'denied') {
       return (
-        <View>
-          <Text>Denied</Text>
+        <View style={styles.center}>
+          <Foundation name='alert' size={50} />
+          <Text style={{ textAlign: 'center'}}>
+            You denied your location. You can fix this by visiting your settings and enabling location services fro this app
+          </Text>
         </View>
       )
     } else if (status === 'undetermined') {
       return (
-        <View>
-          <Text>undetermined</Text>
+        <View style={styles.center}>
+          <Foundation name='alert' size={50} />
+          <Text> Oops.. You need to enable location services</Text>
+          <TouchableOpacity onPress={this.askPermission} style={styles.button}>
+            <Text style={styles.buttonText}> Enable</Text>
+          </TouchableOpacity>
         </View>
       )
     }
 
     return (
-      <View>
-        <Text>Live</Text>
-        <Text>{JSON.stringify(this.state)}</Text>
+      <View style={styles.container}>
+        <View style={styles.directionContainer}>
+          <Text style={styles.header}> You're heading</Text>
+          <Text style={styles.direction}> North </Text>
+        </View>
+        <View style={styles.metricContainer}>
+          <View style={styles.metric}>
+            <Text style={[styles.header, { color: white }]}>
+              Altitude
+            </Text>
+            <Text style={[styles.subHeader, { color: white }]}>
+              {200} Feet
+            </Text>
+          </View>
+          <View style={styles.metric}>
+            <Text style={[styles.header, { color: white }]}>
+              Speed
+            </Text>
+            <Text style={[styles.subHeader, { color: white }]}>
+              {300} MPH
+            </Text>
+          </View>
+        </View>
       </View>
+        
     )
   }
 }
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: purple,
+    alignSelf: 'center',
+    borderRadius: 5,
+    margin: 20,
+  },
+  buttonText: {
+    color: white,
+    fontSize: 20,
+  },
+  direction: {
+    color: purple,
+    fontSize: 120,
+    textAlign: 'center',
+  },
+  directionContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  header: {
+    fontSize: 35,
+    textAlign: 'center',
+  },
+  metricContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: purple,
+  },
+  metric: {
+    flex: 1,
+    paddingTop: 15,
+    paddingBottom: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  subHeader: {
+    fontSize: 25,
+    textAlign: 'center',
+    marginTop: 5,
+  },
+})
