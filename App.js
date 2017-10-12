@@ -1,5 +1,5 @@
 // External Components
-import React from 'react'
+import React, { Component } from 'react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { Constants } from 'expo'
@@ -10,6 +10,7 @@ import devToolsEnhancer from 'remote-redux-devtools';
 
 // Our Depdencies
 import { purple, white } from './utils/colors'
+import { setLocalNotification } from './utils/helpers'
 
 // Our Components
 import AddEntry from './components/AddEntry'
@@ -91,11 +92,19 @@ const FitnessStatusBar = ({ backgroundColor, props }) => (
 // Boostrap store
 const store = createStore(reducer, devToolsEnhancer());
 
-export default () => (
-  <Provider store={store}>
-    <View style={{flex: 1}}>
-      <FitnessStatusBar backgroundColor={white} barStyle='light-content'/>
-      <MainNavigator />
-    </View>
-  </Provider>
-)
+export default class App extends Component {
+  componentDidMount () {
+    setLocalNotification()
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <FitnessStatusBar backgroundColor={white} barStyle='light-content'/>
+          <MainNavigator />
+        </View>
+      </Provider>
+    )
+  }
+}

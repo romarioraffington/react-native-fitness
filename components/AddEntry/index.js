@@ -13,7 +13,14 @@ import FitnessStepper from '../FitnessStepper'
 import SubmitButton from './components/SubmitButton'
 
 // Our Helpers
-import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../../utils/helpers'
+import { 
+  getMetricMetaInfo, 
+  timeToString, 
+  getDailyReminderValue, 
+  clearLocalNotification, 
+  setLocalNotification
+} from '../../utils/helpers'
+
 import { white } from '../../utils/colors'
 import { submitEntry, removeEntry } from '../../utils/api'
 
@@ -82,7 +89,8 @@ class AddEntry extends Component {
     this.toHome()
     submitEntry({ key, entry })
 
-    // Clear local notification
+    clearLocalNotification()
+      .then(setLocalNotification)
   }
 
   reset = () => {

@@ -1,7 +1,13 @@
+// External Dependencies
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, StyleSheet, AsyncStorage } from 'react-native'
+import { Notifications, Permissions } from './colors'
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+
+// Our Dependencies
 import { white, red, orange, blue, lightPurp, pink } from './colors';
+
+const NOTIFICATION_KEY = 'Fitness:notifications'
 
 export function isBetween (num, x, y) {
   if (num >= x && num <= y) {
@@ -161,4 +167,58 @@ export const getDailyReminderValue = () => {
   return {
     today: '👋 Don\'t  forget to log your data today!'
   }
+}
+
+// Notifications
+
+export const createNotification = () => ({
+  title: 'Log Your Stats',
+  body: '👋 Don\'t  forget to log your data today!',
+  ios: {
+    sound: true
+  },
+  android: {
+    sound: true,
+    priority: 'high',
+    sticky: false,
+    vibrate: true
+  }
+})
+
+export const clearLocalNotification = () => (
+  AysncStorage
+    .removeItem(NOTIFICATION_KEY)
+    .then(Notifications.cancelAllScheduledNotificationsAsync)
+
+)
+
+export const setLocalNotification = () => {
+  AsyncStorage
+    .getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then(data => {
+      if (data === null) {
+        Permissions
+          .askAsync(Permissions.NOTIFICATIONS)
+          .then(({ status }) => {
+            if (status === 'granted') {
+              Notifications.cancelAllScheduledNotificationsAsync()
+
+              let tomorrow = new Date()
+              tomorrow.setDate(tomorrow.getDate() + 1)
+              tomorrow.setHours(20)
+              tomorrow.setMinutes(0)
+
+              Notifications.scheduleLocalNotificationAsync(
+                createNotification(), {
+                  time: tomorrow,
+                  repeat: 'day'
+                }
+              )
+
+              AysncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+            }
+          })
+      }
+    })
 }
