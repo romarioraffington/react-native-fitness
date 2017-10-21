@@ -1,7 +1,6 @@
 // External Dependencies
 import React from 'react'
-import { View, StyleSheet, AsyncStorage } from 'react-native'
-import { Notifications, Permissions } from './colors'
+import { Permissions, Notifications, View, StyleSheet, AsyncStorage } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 // Our Dependencies
